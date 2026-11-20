@@ -1,0 +1,94 @@
+schema_version: "1.0"
+id: hmmp
+name: HMMP
+version: "1.0"
+description: >-
+  Hierarchical Multimodal Portfolio Learning for Joint Stock Selection and
+  Industry Allocation。行情/行业价格/金融新闻多模态表示 + Sparse MoE +
+  行业 Top-K 与行业内股票 Top-K 分层选择 + CTDE-MAPPO。
+  原始代码不复制、不修改；适配器以受控 CLI 参数列表在独立工作目录中
+  驱动 B_Train.py（数据经 Data/ 目录注入，产物从 Results/ 回收规范化）。
+paper:
+  title: >-
+    Hierarchical Multimodal Portfolio Learning for Joint Stock Selection and
+    Industry Allocation
+  note: 原论文实验数据为 CSI500
+framework: pytorch
+python_executable: null
+capabilities:
+  - train
+  - portfolio_weights
+  - industry_allocation
+  - news_analysis
+dataset_requirements:
+  - markets: [CSI500]
+    modalities: [stock_features, industry_prices, industry_news]
+    required_fields: [Date, Industry_id]
+    description: >-
+      A_* 预处理产物：Data/IndustryPrice/Industry*.csv + 行业价格特征表 +
+      行业新闻特征表（B_DataLoader.MultiModalIndustryDataLoader 约定）
+parameters:
+  - name: device
+    label: 计算设备
+    type: enum
+    default: cpu
+    choices: [cpu, cuda]
+    cli_flag: --device
+    description: 训练设备（本机无 GPU 时选 cpu；auto 会自动探测）。
+  - name: split_mode
+    label: 切分模式
+    type: enum
+    default: fixed
+    choices: [fixed, walk_forward]
+    cli_flag: --split_mode
+    description: 论文协议：fixed=按日期切分（默认 2011-01-01~2020-06-16 训练）。
+  - name: epochs
+    label: 训练轮数
+    type: int
+    default: 2
+    min: 1
+    max: 200
+    cli_flag: --epochs
+    description: 训练 epochs（论文 CLI 默认 2）。
+  - name: industry_top_k
+    label: 行业 Top-K
+    type: int
+    default: 5
+    min: 1
+    max: 30
+    cli_flag: --industry_top_k
+    description: 跨行业选择数量（论文默认 5）。
+  - name: intra_top_k
+    label: 行业内股票 Top-K
+    type: int
+    default: 5
+    min: 1
+    max: 50
+    cli_flag: --intra_top_k
+    description: 每个行业内部保留的股票数量（论文默认 5）。
+  - name: max_cash_weight
+    label: 现金权重上限
+    type: float
+    default: 0.2
+    min: 0.0
+    max: 1.0
+    cli_flag: --max_cash_weight
+    description: 现金权重上限（论文默认 0.2）。
+  - name: seed
+    label: 随机种子
+    type: int
+    default: 42
+    min: 0
+    max: 100000
+    cli_flag: --seed
+    description: 随机种子（论文默认 42）。
+outputs:
+  result_format: StandardPortfolioResult
+  artifacts:
+    - test_daily_returns.csv
+    - test_industry_weights.csv
+    - test_stock_intra_weights.csv
+execution:
+  adapter_file: adapter.py
+  original_code_subdir: HMMP
+  default_timeout_seconds: 86400

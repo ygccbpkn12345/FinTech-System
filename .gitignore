@@ -1,0 +1,53 @@
+# Credentials and machine-specific configuration
+.env
+.env.*
+!.env.example
+!.env.development.example
+**/server_runtime_config.json
+**/algorithm_registry.json
+*.pem
+*.key
+*.pfx
+# Python / JavaScript environments and generated files
+.venv/
+venv/
+node_modules/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+dist/
+build/
+coverage/
+# Runtime data, histories and model outputs
+/analyst/Analyst/data/
+/analyst/Analyst/data_cache/
+/analyst/Analyst/result/
+/analyst/Analyst/runtime/
+/analyst/output/
+/System/FinPortfolio_MVP/datasets/
+/System/FinPortfolio_MVP/experiments/
+/System/FinPortfolio_MVP/checkpoints/
+/System/FinPortfolio_MVP/logs/
+/System/FinPortfolio_MVP/backend/storage/
+.local/
+*.log
+*.db
+*.sqlite*
+*.pt
+*.pth
+*.ckpt
+*.h5
+# Local archives / editors
+*.zip
+*.tar
+*.tar.gz
+*.exe
+.worktrees/
+.tools/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.tsbuildinfo

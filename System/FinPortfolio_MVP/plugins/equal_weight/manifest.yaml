@@ -1,0 +1,51 @@
+schema_version: "1.0"
+id: equal_weight
+name: Equal Weight Portfolio
+version: "1.0"
+description: >-
+  等权重投资组合基线策略：在给定股票池内每日再平衡至 1/N 权重。
+  作为插件化架构的第三方示例插件验证：接入仅依赖 manifest + adapter，
+  未修改系统核心代码与前端。基于真实行情数据执行统一口径回测。
+paper:
+  title: "The Surprising Alpha of Short-Term Reversal / 1/N Heuristic (基线策略)"
+  note: 经典 1/N 基线，非论文算法；用于平台扩展性验收与对照
+framework: numpy+pandas
+capabilities:
+  - backtest
+  - portfolio_weights
+dataset_requirements:
+  - markets: []          # 任意市场，只要提供个股行情
+    modalities: [prices]
+    required_fields: [date, tic, close]
+    description: 长表行情 CSV（date, tic, close）
+parameters:
+  - name: top_k
+    label: 持股数量上限 K
+    type: int
+    default: 0
+    min: 0
+    max: 500
+    description: >-
+      每日持有的股票数量。0 表示使用全部股票；K>0 时按股票代码字典序
+      取前 K 只（等权策略无打分排序，此规则已在描述中显式声明）。
+  - name: cost_pct
+    label: 单边交易费率
+    type: float
+    default: 0.0
+    min: 0.0
+    max: 0.01
+    description: 每次调仓按成交额收取的费率（0 表示不计费，输出与毛收益一致）。
+  - name: initial_cash_ratio
+    label: 初始现金比例
+    type: float
+    default: 0.0
+    min: 0.0
+    max: 0.5
+    description: 每日保留的现金比例（权益部分按 1/N 等权）。
+outputs:
+  result_format: StandardPortfolioResult
+  artifacts:
+    - weights.csv
+execution:
+  adapter_file: adapter.py
+  default_timeout_seconds: 600

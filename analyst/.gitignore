@@ -1,0 +1,22 @@
+.worktrees/
+.env
+
+# Large packaged artifacts
+analystverse.tar
+
+# Python runtime artifacts
+**/__pycache__/
+**/.pytest_cache/
+*.py[cod]
+Analyst/data_cache/
+Analyst/algorithm_registry.json
+
+# Frontend dependencies and builds
+frontend/node_modules/
+frontend/dist/
+
+# Editor and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

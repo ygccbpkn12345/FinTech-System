@@ -1,0 +1,47 @@
+schema_version: "1.0"
+id: single_stock_entry
+name: 单股买入方式
+version: "1.0"
+description: 对比历史窗口内的一次买入与两批买入，统一资金、退出和费用口径。
+paper:
+  title: 单股买入规则对照实验
+  note: 平台内置研究规则
+framework: pandas
+capabilities: [backtest]
+dataset_requirements:
+  - modalities: [prices]
+    required_fields: [date, tic, open, close, volume]
+parameters:
+  - name: symbol
+    label: 股票代码
+    type: str
+    default: ""
+    required: true
+  - name: cutoff_date
+    label: 分析日期（仅使用此前行情）
+    type: str
+    default: ""
+    required: true
+  - name: entry_mode
+    label: 买入方式
+    type: enum
+    choices: [single, staged]
+    default: single
+  - name: position_ratio
+    label: 计划投入占起始资金比例
+    type: float
+    default: 1.0
+    min: 0.000001
+    max: 1.0
+  - name: cost_pct
+    label: 每笔成交金额费率
+    type: float
+    default: 0.001
+    min: 0
+    max: 0.01
+outputs:
+  result_format: StandardPortfolioResult
+  artifacts: [trades.csv]
+execution:
+  adapter_file: adapter.py
+  default_timeout_seconds: 60

@@ -1,0 +1,19 @@
+# 配置数据源优先级（不写死股票列表）
+data_sources:
+  - type: "local_file"
+    priority: 1              # 优先本地文件
+    data_dir: "data/technical_indicators/"
+  - type: "akshare"
+    priority: 2              # 本地没有再用网络
+  - type: "tushare"
+    priority: 3
+    token: ""  # 通过 TUSHARE_TOKEN 环境变量提供
+
+# 只配置日期范围
+start_date: "2022-01-01"
+end_date: "2025-01-01"
+
+# 可选的过滤条件
+filter:
+  market: "A股"        # 只分析 A 股
+  min_days: 200        # 至少有200个交易日

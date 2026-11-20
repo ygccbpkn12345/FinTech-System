@@ -1,0 +1,251 @@
+/* FinPortfolio 平台样式 — 保留原 MVP 设计语言（侧栏 #111d34 / 主色 #2869cf / 卡片 14px 圆角）
+   并扩展：状态徽章、参数表单、日志框、算法卡片、兼容性列表等插件化新组件 */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+  background: #f5f7fc;
+  color: #1d2b44;
+}
+
+.app { display: flex; min-height: 100vh; }
+
+/* ---------------- 侧栏 ---------------- */
+aside {
+  width: 235px; flex-shrink: 0;
+  background: #111d34; color: #fff;
+  padding: 27px 15px;
+  display: flex; flex-direction: column;
+}
+.brand { display: flex; align-items: center; gap: 12px; padding: 2px 10px 35px; }
+.brand-logo {
+  width: 40px; height: 40px; border-radius: 11px;
+  background: linear-gradient(135deg, #2869cf, #5e9cfa);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 15px; color: #fff;
+}
+.brand-name { font-weight: 750; font-size: 17px; }
+.brand-sub { font-size: 11px; color: #8fa5c4; margin-top: 3px; }
+nav { display: grid; gap: 8px; }
+nav a {
+  color: #adbcd2; text-decoration: none;
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 16px; border-radius: 10px;
+  font-size: 14px;
+}
+nav a.active, nav a:hover { background: #253957; color: #fff; }
+.side-foot {
+  margin-top: auto; color: #738aaa; font-size: 12px;
+  padding: 20px 14px; display: flex; align-items: center; gap: 8px;
+}
+.dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.dot.ok { background: #2ec27e; box-shadow: 0 0 6px #2ec27e99; }
+.dot.bad { background: #d0342c; }
+
+/* ---------------- 主区 ---------------- */
+main { flex: 1; min-width: 0; }
+.main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+header {
+  height: 73px; background: #fff;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 36px; border-bottom: 1px solid #e8eef7;
+  font-size: 14px; font-weight: 550;
+}
+main { flex: 1; }
+.content, .page {
+  max-width: 1480px; width: 100%;
+  margin: 0 auto; padding: 34px 36px;
+}
+.pill { border-radius: 20px; padding: 7px 12px; color: #285faa; background: #eaf2ff; font-size: 12px; display: inline-flex; align-items: center; gap: 4px; }
+.pill.subtle { background: #f0f3f9; color: #6b7a92; }
+.muted { color: #8390a6; }
+.small-text { font-size: 12px; }
+.warn-text { color: #a06a13; }
+
+.heading { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 23px; flex-wrap: wrap; }
+.heading h2 { font-size: 25px; margin: 0 0 8px; }
+.heading p { font-size: 13px; color: #8490a2; margin: 0; }
+
+/* ---------------- 按钮 / 表单 ---------------- */
+button { cursor: pointer; border: 0; border-radius: 8px; padding: 11px 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; }
+button.primary { background: #2869cf; color: #fff; }
+button.primary:hover:not(:disabled) { background: #1f5ab8; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+.outline { background: #fff; border: 1px solid #dce4ef; color: #4c5d79; }
+.outline:hover:not(:disabled) { border-color: #2869cf; color: #2869cf; }
+button.outline.small { padding: 6px 10px; font-size: 12px; border-radius: 6px; }
+button.outline.danger { color: #ba4432; }
+button.outline.danger:hover:not(:disabled) { border-color: #ba4432; }
+.btn-link {
+  background: none; border: 0; padding: 0; color: #2869cf;
+  cursor: pointer; font-weight: 600; font-size: 13px; text-decoration: none;
+  display: inline; border-radius: 0;
+}
+.btn-link:hover { text-decoration: underline; }
+
+select, input {
+  border: 1px solid #dfe6f0; border-radius: 8px; padding: 12px;
+  background: #fff; color: #34425e; font-size: 14px;
+}
+select:focus, input:focus { outline: 2px solid #2869cf33; border-color: #2869cf; }
+
+.row-ops { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+.form-row { display: grid; gap: 7px; font-size: 13px; margin-bottom: 16px; }
+.form-row > label { font-weight: 650; color: #42536e; }
+.form-section { margin: 20px 0 10px; font-size: 14px; color: #33456a; }
+.form-actions { display: flex; gap: 12px; margin-top: 20px; }
+
+/* 动态参数表单 */
+.paramform { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.param-row { background: #f8fafd; border: 1px solid #e8edf4; border-radius: 10px; padding: 13px 15px; display: grid; gap: 7px; }
+.param-row label { font-size: 13px; font-weight: 650; color: #33456a; display: flex; align-items: center; gap: 8px; }
+.param-type { font-size: 10px; color: #8494ab; background: #e8eef7; border-radius: 4px; padding: 2px 6px; font-weight: 500; }
+.param-desc { font-size: 12px; color: #8494ab; }
+.param-range { font-size: 11px; color: #9aa7bc; }
+
+/* 数据时间范围（训练/测试集切片） */
+.split-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px; }
+.split-pair { display: flex; align-items: center; gap: 8px; background: #f8fafd; border: 1px solid #e8edf4; border-radius: 10px; padding: 8px 12px; }
+.split-label { font-size: 12px; font-weight: 650; color: #33456a; min-width: 3em; }
+.split-sep { color: #9aa7bc; }
+.split-pair input[type="date"] { flex: 1; min-width: 0; font-size: 13px; padding: 5px 8px; border: 1px solid #dde5ef; border-radius: 7px; background: #fff; color: #22314a; }
+
+.train-form { max-width: 980px; }
+.import form { display: grid; gap: 16px; }
+.import .grid2 { margin-top: 4px; }
+
+/* ---------------- 卡片 / 面板 ---------------- */
+.cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 19px; }
+.metric, .panel {
+  background: #fff; border: 1px solid #e8edf4; border-radius: 14px;
+  box-shadow: 0 4px 18px #203b6410;
+}
+.metric { padding: 22px 23px; }
+.m-label { display: block; font-size: 13px; color: #8290a4; }
+.m-value { display: block; font-size: 26px; margin-top: 12px; letter-spacing: -.5px; font-weight: 700; }
+.m-value.small-text { font-size: 16px; }
+.m-hint { display: block; font-size: 12px; color: #9aa7bc; margin-top: 7px; }
+/* 收益着色：A 股惯例——盈利红、亏损绿 */
+.pos { color: #c43d2e; }
+.neg { color: #14935a; }
+/* 非收益语义的着色（校验通过 / 异常警示），与涨跌色解耦 */
+.ok-text { color: #14935a; }
+.bad-text { color: #c43d2e; }
+
+.panel { padding: 24px; margin-bottom: 18px; }
+.panel h3 { font-size: 16px; margin: 0; }
+.panel h4 { font-size: 13.5px; margin: 20px 0 10px; color: #33456a; }
+.panel-sub { color: #8894a5; font-size: 12px; margin-top: 5px; }
+.panel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 17px; }
+.panel-actions { display: flex; gap: 10px; align-items: center; }
+.panel > .tablewrap, .panel > .cards { margin-top: 8px; }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* ---------------- 算法卡片 ---------------- */
+.algo-cards { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+.algo-card { text-align: left; cursor: pointer; font-size: inherit; transition: border-color .15s; display: block; width: 100%; }
+.algo-card:hover { border-color: #2869cf; }
+.algo-card.selected { border-color: #2869cf; box-shadow: 0 4px 18px #2869cf22; }
+.algo-card-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.algo-id { font-size: 12px; color: #6b7a92; display: inline-block; margin-top: 5px; }
+.algo-desc { font-size: 12.5px; color: #64748f; line-height: 1.65; margin: 10px 0; min-height: 2.6em; }
+.algo-caps { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.algo-meta { font-size: 12px; color: #9aa7bc; }
+
+/* 能力徽章配色 */
+.cap-train { background: #e8f1ff; color: #2869cf; }
+.cap-backtest { background: #e9f9f0; color: #14935a; }
+.cap-predict { background: #f3edff; color: #6f42c1; }
+.cap-stock_selection { background: #fff4e3; color: #a06a13; }
+.cap-industry_allocation { background: #fdeaf4; color: #b0367a; }
+.cap-news_analysis { background: #e7f7f8; color: #0d7f8c; }
+.cap-portfolio_weights { background: #eef2f7; color: #4c5d79; }
+
+/* ---------------- 状态徽章 ---------------- */
+.badge-ok { background: #e5f7ee; color: #14935a; }
+.badge-err { background: #fdeae7; color: #c43d2e; }
+.badge-run { background: #e8f1ff; color: #2869cf; }
+.badge-pend { background: #f3f0e4; color: #a08a13; }
+.badge-mut { background: #eef2f7; color: #6b7a92; }
+
+/* ---------------- 提示条 ---------------- */
+.alert { border-radius: 10px; padding: 14px 17px; font-size: 13.5px; margin-bottom: 16px; line-height: 1.7; }
+.alert ul { margin: 7px 0 0; padding-left: 20px; }
+.alert-info { background: #eaf2ff; color: #28527e; border: 1px solid #c6dbff; }
+.alert-warn { background: #fdf6e5; color: #8a6410; border: 1px solid #f3e0ae; }
+.alert-error { background: #fdecea; color: #a03325; border: 1px solid #f6c8c1; }
+.alert-success { background: #e6f7ee; color: #17714a; border: 1px solid #bde8d1; }
+
+.loading { text-align: center; padding: 60px; color: #8a96a7; font-size: 14px; }
+.error { padding: 15px; background: #fff0ed; color: #ba4432; border-radius: 8px; margin-bottom: 16px; }
+
+.empty { text-align: center; padding: 60px 20px; background: #fff; border-radius: 14px; color: #8a96a7; font-size: 14px; line-height: 2; }
+
+/* ---------------- 表格 ---------------- */
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; background: #fff; }
+th, td { text-align: left; padding: 14px 12px; border-bottom: 1px solid #edf1f6; white-space: nowrap; }
+th { color: #8792a5; font-weight: 600; }
+.th-sub { font-weight: 400; margin-top: 3px; }
+tbody tr:hover { background: #f8fafd; }
+td .btn-link { white-space: nowrap; }
+
+/* ---------------- 键值 / 清单 / 标签 ---------------- */
+dl.kv { display: grid; grid-template-columns: 130px 1fr; gap: 9px 14px; font-size: 13px; margin: 0; }
+dl.kv dt { color: #8792a5; }
+dl.kv dd { margin: 0; word-break: break-all; }
+.file-list { font-size: 12.5px; color: #5b6b85; padding-left: 18px; line-height: 2; margin: 6px 0; }
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 7px; max-height: 200px; overflow-y: auto; }
+.req-block { font-size: 12.5px; background: #f8fafd; border: 1px solid #e8edf4; border-radius: 8px; padding: 10px 13px; margin-bottom: 8px; line-height: 1.9; }
+.notes-list { font-size: 13px; color: #5b6b85; line-height: 1.9; padding-left: 18px; }
+
+/* ---------------- 日志框 ---------------- */
+.logbox {
+  background: #0f1c33; color: #c9d7ee; font-size: 12px; line-height: 1.75;
+  border-radius: 10px; padding: 16px 18px; max-height: 420px; overflow: auto;
+  white-space: pre-wrap; word-break: break-all; margin: 8px 0 0;
+}
+.logbox.small-text { max-height: 260px; }
+
+/* ---------------- 权重条 / 图表备注 ---------------- */
+.wbar { background: #eef2f7; border-radius: 5px; height: 10px; width: 100%; min-width: 120px; overflow: hidden; }
+.wbar-fill { background: #2869cf; height: 100%; border-radius: 5px; }
+.chart-note { font-size: 12px; color: #93a1b8; margin-top: 9px; }
+
+/* ---------------- 兼容性列表 ---------------- */
+.compat-list { display: grid; gap: 10px; }
+.compat-row { display: flex; align-items: center; gap: 14px; font-size: 13.5px; flex-wrap: wrap; border: 1px solid #e8edf4; border-radius: 10px; padding: 12px 15px; }
+.compat-row > div:first-child { flex: 1; min-width: 180px; }
+.compat-result { font-size: 13px; }
+.compat-result.ok { color: #14935a; }
+.compat-result.bad { color: #c43d2e; }
+.compat-result ul { margin: 5px 0 0; padding-left: 18px; color: #a06a13; font-size: 12px; }
+
+code { background: #f0f4fa; border-radius: 5px; padding: 1.5px 6px; font-size: .92em; color: #33456a; }
+.logbox code, .algo-id code { background: transparent; }
+.mono { font-family: ui-monospace, Consolas, monospace; }
+
+/* ---------------- 响应式 ---------------- */
+@media (max-width: 1050px) {
+  .cards { grid-template-columns: repeat(2, 1fr); }
+  .grid2 { grid-template-columns: 1fr; }
+  .paramform { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  aside { width: 66px; padding: 16px 6px; }
+  .brand-logo { width: 34px; height: 34px; }
+  .brand-name, .brand-sub { display: none; }
+  nav a { justify-content: center; padding: 13px; }
+  nav a span { display: none; }
+  .side-foot { display: none; }
+  .content, .page { padding: 20px 14px; }
+  header { padding: 0 14px; }
+  .cards { gap: 9px; }
+  .metric { padding: 16px; }
+  .m-value { font-size: 21px; }
+  dl.kv { grid-template-columns: 1fr; }
+}
